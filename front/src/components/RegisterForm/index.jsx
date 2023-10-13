@@ -3,17 +3,14 @@ import * as yup from 'yup';
 import { Grid, TextField } from '@mui/material';
 import RButton from '../../components/Button';
 import ForwardOutlinedIcon from '@mui/icons-material/ForwardOutlined';
+import {createUser} from '../../utils/api'
 
 
 const validationSchema = yup.object({
-  username: yup
-    .string('Enter your username')
-    .min(3, 'Username should be of minimum 3 characters length')
-    .required('Username is required'),
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
+  nombre: yup
+    .string('Enter your nombre')
+    .min(3, 'nombre should be of minimum 3 characters length')
+    .required('nombre is required'),
   password: yup
     .string('Enter your password')
     .min(8, 'Password should be of minimum 8 characters length')
@@ -27,22 +24,27 @@ const validationSchema = yup.object({
 const RegisterForm = () => {
   const formik = useFormik({
     initialValues: {
-      username: '',
+      nombre: '',
       password: '',
       confirmPassword: '',
       domicilio: {
         calle: '',
         numero: '',
-        provincia: '',
-      },
-      profesion:{
-        titulo: '',
-        descripcion: '',
+        ciudad: '',
       },
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => { // TODO: Add api function
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      console.log('values:',values)
+      const {nombre, password, domicilio} = values;
+      const response = await createUser(nombre, password, domicilio)
+      console.log('response:',response.data)
+
+      if (response.status === 201) {
+        alert("Usuario creado con exito") // TODO: remplazar por snackbar
+      } else {
+        alert("Error al crear usuario")
+      }
     },
   });
 
@@ -67,14 +69,14 @@ const RegisterForm = () => {
       <form onSubmit={formik.handleSubmit}>
         <TextField
           sx={styles.input}
-          id="username"
-          name="username"
-          label="Username"
-          value={formik.values.username}
+          id="nombre"
+          name="nombre"
+          label="nombre"
+          value={formik.values.nombre}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.username && Boolean(formik.errors.username)}
-          helperText={formik.touched.username && formik.errors.username}
+          error={formik.touched.nombre && Boolean(formik.errors.nombre)}
+          helperText={formik.touched.nombre && formik.errors.nombre}
         />
         <TextField
           sx={styles.input}
@@ -105,6 +107,40 @@ const RegisterForm = () => {
             formik.touched.confirmPassword && formik.errors.confirmPassword
           }
         />
+        <TextField
+          sx={styles.input}
+          id="domicilio.calle"
+          name="domicilio.calle"
+          label="Calle"
+          value={formik.values.domicilio.calle}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.domicilio?.calle && Boolean(formik.errors.domicilio?.calle)}
+          helperText={formik.touched.domicilio?.calle && formik.errors.domicilio?.calle}
+        />
+        <TextField
+          sx={styles.input}
+          id="domicilio.numero"
+          name="domicilio.numero"
+          label="Numero"
+          value={formik.values.domicilio.numero}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.domicilio?.numero && Boolean(formik.errors.domicilio?.numero)}
+          helperText={formik.touched.domicilio?.numero && formik.errors.domicilio?.numero}
+        />
+        <TextField
+          sx={styles.input}
+          id="domicilio.ciudad"
+          name="domicilio.ciudad"
+          label="ciudad"
+          value={formik.values.domicilio.ciudad}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.domicilio?.ciudad && Boolean(formik.errors.domicilio?.ciudad)}
+          helperText={formik.touched.domicilio?.ciudad && formik.errors.domicilio?.ciudad}
+        />
+
         <RButton 
           text="Register"
           action={formik.handleSubmit}

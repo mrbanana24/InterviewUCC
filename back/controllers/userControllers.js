@@ -2,32 +2,15 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
-  const { nombre, password, domicilio, profesiones } = req.body;
+  const { nombre, password, domicilio } = req.body;
 
-  try {
-    // Check if user already exists
-    if (await User.findOne({ nombre })) {
-      return res.status(400).json({
-        error: true,
-        message: "El nombre de usuario ya está registrado",
-      });
-    }
-
-    // Create user
-    const user = new User({
-      nombre,
-      password,
-      domicilio,
-      profesiones,
-    });
-
-    // Save user
-    const userDB = await user.save();
-    res.json({
-      error: null,
-      data: userDB,
-    });
-  } catch (error) {
-    res.status(400).json({ error });
+  // Validar que no exista un usuario con el mismo nombre
+  if (await User.findOne({ nombre })) {
+    return res.status(400).json({ error: "El usuario ya existe" });
   }
+
+  const user = new User({ nombre, password, domicilio });
+  await user.save();
+  console.log("user creado:", user);
+  return res.status(201).json(user);
 };
