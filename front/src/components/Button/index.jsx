@@ -9,7 +9,7 @@ const RButton = ({ text, action, icon }) => {
         type="submit"
         variant="outlined"
         endIcon={icon}
-        onClick={() => action()}
+        onClick={action}
       >
         {text}
       </Button>
