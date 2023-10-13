@@ -1,8 +1,10 @@
+import RegisterForm from "./components/RegisterForm"
+
 function App() {
 
   return (
     <>
-      <p>hola</p>
+      <RegisterForm />
     </>
   )
 }
