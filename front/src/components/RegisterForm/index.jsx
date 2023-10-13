@@ -1,9 +1,11 @@
-import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useFormik } from 'formik';
+import { useState } from 'react';
 import { Grid, TextField } from '@mui/material';
-import RButton from '../../components/Button';
 import ForwardOutlinedIcon from '@mui/icons-material/ForwardOutlined';
+import RButton from '../../components/Button';
 import {createUser} from '../../utils/api'
+import Snackbar from '../../components/Snackbar';
 
 
 const validationSchema = yup.object({
@@ -22,6 +24,18 @@ const validationSchema = yup.object({
 });
 
 const RegisterForm = () => {
+  // states
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [severity, setSeverity] = useState('');
+
+  const handleClose = (reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
   const formik = useFormik({
     initialValues: {
       nombre: '',
@@ -35,36 +49,41 @@ const RegisterForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log('values:',values)
+      try {
       const {nombre, password, domicilio} = values;
       const response = await createUser(nombre, password, domicilio)
-      console.log('response:',response.data)
 
       if (response.status === 201) {
-        alert("Usuario creado con exito") // TODO: remplazar por snackbar
-      } else {
-        alert("Error al crear usuario")
+        setOpen(true);
+        setMessage('Usuario creado con exito');
+        setSeverity('success');
+      } } catch (error) {
+        setOpen(true);
+        setMessage(error.response.data.error);
+        setSeverity('error');
       }
     },
   });
 
   const styles = {
     form: {
-      border: '1px solid black', // TODO: borrarlo
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '80%',
+      maxWidth: '50vw',
+      border: '1px solid #ccc',
+      padding: '16px',
+      borderRadius: '10px',
+      margin: 'auto',
+      display: 'flex',          
+      flexDirection: 'column',  
+      alignItems: 'center',   
     },
     input: {
-      margin: '10px 0',
-      width: '80%',
-      alignSelf: 'center',
+      width: '100%',
+      margin: '8px 0',
     },
   };
 
   return (
+    <>
     <Grid container sx={styles.form}>
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -148,6 +167,14 @@ const RegisterForm = () => {
         />
       </form>
     </Grid>
+    <Snackbar
+      open={open}
+      message={message}
+      severity={severity}
+      body={message}
+      handleClose={() => handleClose()}
+    />
+    </>
   );
 };
 

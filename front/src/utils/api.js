@@ -10,5 +10,6 @@ export const createUser = async (nombre, password, domicilio) => {
     return response;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };

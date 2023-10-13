@@ -6,11 +6,11 @@ exports.register = async (req, res) => {
 
   // Validar que no exista un usuario con el mismo nombre
   if (await User.findOne({ nombre })) {
-    return res.status(400).json({ error: "El usuario ya existe" });
+    return res.status(400).json({ message: "El usuario ya existe" });
   }
 
   const user = new User({ nombre, password, domicilio });
   await user.save();
   console.log("user creado:", user);
-  return res.status(201).json(user);
+  return res.status(201).json({ message: "Usuario creado" });
 };
