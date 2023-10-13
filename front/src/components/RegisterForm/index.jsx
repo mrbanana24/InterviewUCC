@@ -2,6 +2,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Grid, TextField } from '@mui/material';
 import RButton from '../../components/Button';
+import ForwardOutlinedIcon from '@mui/icons-material/ForwardOutlined';
+
 
 const validationSchema = yup.object({
   username: yup
@@ -106,7 +108,11 @@ const RegisterForm = () => {
             formik.touched.confirmPassword && formik.errors.confirmPassword
           }
         />
-        <RButton text="Register" action={formik.handleSubmit} />
+        <RButton 
+          text="Register"
+          action={formik.handleSubmit}
+          icon={<ForwardOutlinedIcon />}
+        />
       </form>
     </Grid>
   );
