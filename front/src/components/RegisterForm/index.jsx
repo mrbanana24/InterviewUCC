@@ -28,9 +28,17 @@ const RegisterForm = () => {
   const formik = useFormik({
     initialValues: {
       username: '',
-      email: '',
       password: '',
       confirmPassword: '',
+      domicilio: {
+        calle: '',
+        numero: '',
+        provincia: '',
+      },
+      profesion:{
+        titulo: '',
+        descripcion: '',
+      },
     },
     validationSchema: validationSchema,
     onSubmit: (values) => { // TODO: Add api function
@@ -67,17 +75,6 @@ const RegisterForm = () => {
           onBlur={formik.handleBlur}
           error={formik.touched.username && Boolean(formik.errors.username)}
           helperText={formik.touched.username && formik.errors.username}
-        />
-        <TextField
-          sx={styles.input}
-          id="email"
-          name="email"
-          label="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
         />
         <TextField
           sx={styles.input}
