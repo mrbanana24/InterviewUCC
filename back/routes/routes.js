@@ -14,4 +14,7 @@ router.post("/login", userController.login);
 // verificar token
 router.post("/verify", userController.verifyToken);
 
+// agregar profesion al usuario
+router.post("/addjob", userController.addJob);
+
 module.exports = router;

@@ -38,3 +38,17 @@ export const verifyUser = async (token) => {
     throw error;
   }
 };
+
+export const addJob = async (nombre, titulo, descripcion) => {
+  try {
+    const response = await axios.post("http://localhost:8000/addjob", {
+      nombre,
+      titulo,
+      descripcion,
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

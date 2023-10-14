@@ -4,6 +4,7 @@ import { Grid, TextField } from '@mui/material';
 import ForwardOutlinedIcon from '@mui/icons-material/ForwardOutlined';
 import RButton from '../../components/Button';
 import Snackbar from '../../components/Snackbar';
+import { addJob } from '../../utils/api';
 
 
 const JobForm = () => {
@@ -26,8 +27,10 @@ const JobForm = () => {
     },
     onSubmit: async (values) => {
       try {
-      const {nombre, password} = values;
-      console.log(values)
+      const nombre = sessionStorage.getItem('nombre');
+      const { profesion, descripcion } = values;
+      console.log('VALORES:',values);
+      const response = await addJob(nombre, profesion, descripcion);
 
       if (response.status === 200) {
         setOpen(true);
@@ -76,8 +79,8 @@ const JobForm = () => {
         />
         <TextField
           sx={styles.input}
-          id="Descripcion"
-          name="Descripcion"
+          id="descripcion"
+          name="descripcion"
           label="Cuentanos sobre tu profesion!"
           value={formik.values.password}
           onChange={formik.handleChange}
@@ -86,7 +89,6 @@ const JobForm = () => {
           helperText={formik.touched.password && formik.errors.password}
           multiline
           rows={4} 
-          maxRows={8}
         />
         <RButton 
           text="Agregar"

@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Profesion = require("../models/job");
 const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
@@ -49,6 +50,31 @@ exports.verifyToken = async (req, res, next) => {
     // Add user from payload
     req.user = decoded;
     res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.addJob = async (req, res, next) => {
+  const { nombre, titulo, descripcion } = req.body;
+  try {
+    // Validar que el usuario exista
+    const user = await User.findOne({ nombre });
+    if (!user) {
+      return res.status(400).json({ message: "El usuario no existe" });
+    }
+
+    // Crear profesion
+    const profesion = new Profesion({ titulo, descripcion });
+    await profesion.save();
+
+    // Agregar profesion al usuario
+    user.profesiones.push(profesion);
+    await user.save();
+
+    console.log("user con laburo:", user);
+
+    return res.status(201).json({ message: "Profesion agregada" });
   } catch (error) {
     next(error);
   }

@@ -33,9 +33,10 @@ const LoginForm = () => {
       const {nombre, password} = values;
       const response = await loginUser(nombre, password)
       const {token} = response.data
-      sessionStorage.setItem('token', token)
-
+      
       if (response.status === 200) {
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('nombre', nombre)
         setOpen(true);
         setMessage(response.data.message);
         setSeverity('success');
