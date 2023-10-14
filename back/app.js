@@ -13,6 +13,9 @@ connectDB();
 // Config CORS
 app.use(cors());
 
+// Config dotenv
+require("dotenv").config();
+
 // Routes
 const routes = require("./routes/routes.js");
 app.use("/", routes);

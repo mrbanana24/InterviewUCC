@@ -14,3 +14,42 @@ exports.register = async (req, res) => {
   console.log("user creado:", user);
   return res.status(201).json({ message: "Usuario creado" });
 };
+
+exports.login = async (req, res) => {
+  const { nombre, password } = req.body;
+
+  // Validar que el usuario exista
+  const user = await User.findOne({ nombre });
+  if (!user) {
+    return res.status(400).json({ message: "El usuario no existe" });
+  }
+
+  // Validar que la contraseña sea correcta
+  if (user.password !== password) {
+    return res.status(400).json({ message: "Contraseña incorrecta" });
+  }
+
+  // Generar token
+  const token = jwt.sign({ id: user._id }, process.env.TOKEN_SECRET, {
+    expiresIn: "30d",
+  });
+
+  return res.status(200).json({ message: "Login exitoso", token });
+};
+
+exports.verifyToken = async (req, res, next) => {
+  const { token } = req.body;
+  try {
+    // Check if token exists
+    if (!token) {
+      return res.status(401).json({ error: "No token, authorization denied" });
+    }
+    // Verify token
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+    // Add user from payload
+    req.user = decoded;
+    res.status(200).json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};

@@ -6,7 +6,7 @@ import ForwardOutlinedIcon from '@mui/icons-material/ForwardOutlined';
 import RButton from '../../components/Button';
 import {createUser} from '../../utils/api'
 import Snackbar from '../../components/Snackbar';
-
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = yup.object({
   nombre: yup
@@ -27,7 +27,8 @@ const RegisterForm = () => {
   // states
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [severity, setSeverity] = useState('');
+  const [severity, setSeverity] = useState('success');
+  const Navigate = useNavigate();
 
   const handleClose = (reason) => {
     if (reason === 'clickaway') {
@@ -57,6 +58,7 @@ const RegisterForm = () => {
         setOpen(true);
         setMessage('Usuario creado con exito');
         setSeverity('success');
+        response && Navigate('/login')
       } } catch (error) {
         setOpen(true);
         setMessage(error.response.data.error);
