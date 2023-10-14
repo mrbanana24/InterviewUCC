@@ -70,7 +70,7 @@ const JobForm = () => {
           sx={styles.input}
           id="profesion"
           name="profesion"
-          label="nombre"
+          label="Nombre de tu profesion"
           value={formik.values.nombre}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
