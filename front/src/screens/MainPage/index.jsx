@@ -1,7 +1,11 @@
+import Header from "../../components/Header";
+import JobForm from "../../components/JobForm";
+
 const MainPage = () => {
   return(
     <div>
-      <h1>mainPage</h1>
+      <Header/>
+      <JobForm/>
     </div>
   )
 }

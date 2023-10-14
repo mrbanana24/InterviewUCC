@@ -17,13 +17,11 @@ const Home = () => {
   }
 
   const navigate = useNavigate();
-  const token = sessionStorage.getItem('token')
-  return (
+    return (
     <>
       <Grid container>
         {/* Left part of screen, TODO:Add gift in left part screen */}
         <Grid item xs={12} sx={styles.box}>
-          <p>{token}</p>
 
           <RButton
             text="Login"
