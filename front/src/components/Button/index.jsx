@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 
 // Regular Button
-const RButton = ({ text, action, icon }) => {
+const RButton = ({ text, action, icon, extraStyle }) => {
   return (
     <Stack direction="row" spacing={2}>
       <Button
@@ -10,6 +10,7 @@ const RButton = ({ text, action, icon }) => {
         variant="outlined"
         endIcon={icon}
         onClick={action}
+        sx={extraStyle}
       >
         {text}
       </Button>
