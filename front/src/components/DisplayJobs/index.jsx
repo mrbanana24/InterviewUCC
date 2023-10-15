@@ -3,6 +3,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
 import { getJobs } from '../../utils/api';
+import RButton from '../../components/Button'
+import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined';
 
 const DisplayJobs = () => {
   const styles = {
@@ -16,7 +18,6 @@ const DisplayJobs = () => {
       height: '30%',
       margin: '1rem auto',
     },
-    // hover effect in cards
     cardHover: {
       '&:hover': {
         backgroundColor: '#f5f5f5',
@@ -46,6 +47,18 @@ const DisplayJobs = () => {
   }, []);
 
   return (
+    <>
+    <RButton
+      text="Recargar"
+      action={() => {
+        const fetchJobs = async () => {
+          const data = await getJobs(nombre);
+          setJobs(data.data.profesiones);
+        }
+        fetchJobs();
+      }}
+      icon={<RotateLeftOutlinedIcon />}
+    />
   <Grid container sx={styles.container}>
     {jobs.map((job) => (
       <Card key={job._id} sx={{...styles.card, ...styles.cardHover}}>
@@ -58,6 +71,7 @@ const DisplayJobs = () => {
       </Card>
     ))}
   </Grid>
+  </>
 );
 
 };
