@@ -54,7 +54,8 @@ const JobForm = () => {
       margin: 'auto',
       display: 'flex',          
       flexDirection: 'column',  
-      alignItems: 'center',   
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     input: {
       width: '100%',

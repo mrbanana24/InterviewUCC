@@ -7,16 +7,21 @@ import { getJobs } from '../../utils/api';
 const DisplayJobs = () => {
   const styles = {
     container: {
-      height: '90vh',
+      height: '80vh',
       width: '40vw',
-      border:'1px solid blue',
       overflowY: 'auto'
     },
     card: {
       width: '80%',
       height: '30%',
       margin: '1rem auto',
-      border:'1px solid red',
+    },
+    // hover effect in cards
+    cardHover: {
+      '&:hover': {
+        backgroundColor: '#f5f5f5',
+        cursor: 'pointer',
+      },
     },
     title: {
       fontSize: '19px', 
@@ -43,7 +48,7 @@ const DisplayJobs = () => {
   return (
   <Grid container sx={styles.container}>
     {jobs.map((job) => (
-      <Card key={job._id} sx={styles.card}>
+      <Card key={job._id} sx={{...styles.card, ...styles.cardHover}}>
         <Typography variant="h5" component="div">
           {job.titulo}
         </Typography>
