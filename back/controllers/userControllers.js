@@ -79,3 +79,45 @@ exports.addJob = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getJobs = async (req, res, next) => {
+  const { nombre } = req.params;
+  try {
+    // Validar que el usuario exista
+    const user = await User.findOne({ nombre });
+    if (!user) {
+      return res.status(400).json({ message: "El usuario no existe" });
+    }
+
+    // Obtener profesiones del usuario
+    const profesiones = await Profesion.find({
+      _id: { $in: user.profesiones },
+    });
+    console.log("profesiones:", profesiones);
+
+    return res.status(200).json({ profesiones });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// exports.getJobs = async (req, res, next) => {
+//   const { nombre } = req.params;
+//   try {
+//     // Validar que el usuario exista
+//     const user = await User.findOne({ nombre });
+//     if (!user) {
+//       return res.status(400).json({ message: "El usuario no existe" });
+//     }
+
+//     // Obtener profesiones del usuario
+//     const profesiones = await Profesion.find({
+//       _id: { $in: user.profesiones },
+//     });
+//     console.log("profesiones:", profesiones);
+
+//     return res.status(200).json({ profesiones });
+//   } catch (error) {
+//     next(error);
+//   }
+// };

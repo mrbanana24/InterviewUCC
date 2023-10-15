@@ -52,3 +52,13 @@ export const addJob = async (nombre, titulo, descripcion) => {
     throw error;
   }
 };
+
+export const getJobs = async (nombre) => {
+  try {
+    const response = await axios.get(`http://localhost:8000/getjobs/${nombre}`);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
