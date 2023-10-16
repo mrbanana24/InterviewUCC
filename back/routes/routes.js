@@ -20,4 +20,7 @@ router.post("/addjob", userController.addJob);
 // obtener profesiones del usuario
 router.get("/getjobs/:nombre", userController.getJobs);
 
+// eliminar profesion del usuario
+router.delete("/deletejob/:nombre/:id", userController.deleteJob);
+
 module.exports = router;

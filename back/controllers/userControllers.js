@@ -101,23 +101,29 @@ exports.getJobs = async (req, res, next) => {
   }
 };
 
-// exports.getJobs = async (req, res, next) => {
-//   const { nombre } = req.params;
-//   try {
-//     // Validar que el usuario exista
-//     const user = await User.findOne({ nombre });
-//     if (!user) {
-//       return res.status(400).json({ message: "El usuario no existe" });
-//     }
+exports.deleteJob = async (req, res, next) => {
+  try {
+    const { nombre, id } = req.params;
+    const user = await User.findOne({ nombre });
 
-//     // Obtener profesiones del usuario
-//     const profesiones = await Profesion.find({
-//       _id: { $in: user.profesiones },
-//     });
-//     console.log("profesiones:", profesiones);
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
 
-//     return res.status(200).json({ profesiones });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    await Profesion.findByIdAndRemove(id);
+
+    // También elimina la referencia del trabajo en el array de profesiones del usuario
+    user.profesiones = user.profesiones.filter(
+      (profesionId) => profesionId.toString() !== id
+    );
+
+    await user.save();
+    // retornar lista de trabajos actualizada
+    const profesiones = await Profesion.find({
+      _id: { $in: user.profesiones },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Hubo un error al eliminar el trabajo" });
+  }
+};
