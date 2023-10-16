@@ -53,7 +53,6 @@ const LoginForm = () => {
     form: {
       maxWidth: '30vw',
       minHeight: '20vh',
-      border: '1px solid #ccc',
       padding: '16px',
       borderRadius: '10px',
       margin: 'auto',
