@@ -8,9 +8,9 @@ function Header() {
   const nombre = sessionStorage.getItem('nombre');
   const FirstLatter = nombre.charAt(0).toUpperCase();
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor:'#8FBC8F'}}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar disableGutters style={{ display: 'flex', justifyContent: 'space-between'}}>
           <Typography
             variant="h6"
             noWrap
