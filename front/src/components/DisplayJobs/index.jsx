@@ -2,9 +2,11 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { useEffect, useState } from 'react';
-import { getJobs } from '../../utils/api';
+import { getJobs, deleteJob } from '../../utils/api';
 import RButton from '../../components/Button'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import Snackbar from '../../components/Snackbar'
 
 const DisplayJobs = () => {
   const styles = {
@@ -35,6 +37,9 @@ const DisplayJobs = () => {
     },
   };
 
+  const [open, setOpen] = useState(false);
+  const [body, setBody] = useState('');
+  const [severity, setSeverity] = useState('success');
   const nombre = sessionStorage.getItem('nombre');
   const [jobs, setJobs] = useState([]);
 
@@ -45,6 +50,31 @@ const DisplayJobs = () => {
     }
     fetchJobs();
   }, []);
+
+  const handleClose = (reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  }
+
+  const handleDeleteJob = (nombre, id) => async () => {
+    try {
+      const data = await deleteJob(nombre, id);
+      console.log(data);
+      if (data.status === 200){
+          setJobs(data.data.profesiones);
+          setBody(data.data.message);
+          setSeverity('success');
+          setOpen(true);
+        } else {
+          setBody(data.data.message);
+          setSeverity('error');
+          setOpen(true);
+        }
+    } catch (error){
+      console.log(error);
+    }};
 
   return (
     <>
@@ -69,8 +99,17 @@ const DisplayJobs = () => {
         <Typography variant="body2">
           {job.descripcion}
         </Typography>
+        <DeleteForeverOutlinedIcon
+          onClick={handleDeleteJob(nombre,job._id)}
+        />
       </Card>
     ))}
+    <Snackbar 
+      body={body}
+      severity={severity}
+      open={open}
+      handleClose={() => handleClose()}
+    />
   </Grid>
   </>
 );

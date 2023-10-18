@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
+  const dbUrl =
+    process.env.DATABASE_URL || "mongodb://localhost:27017/interviewUCC";
   mongoose
-    .connect("mongodb://localhost:27017/interviewUCC", {
+    .connect(dbUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

@@ -62,3 +62,15 @@ export const getJobs = async (nombre) => {
     throw error;
   }
 };
+
+export const deleteJob = async (nombre, id) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:8000/deletejob/${nombre}/${id}`
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

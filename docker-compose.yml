@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  # Backend service
+  backend:
+    build: 
+      context: ./back
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=mongodb://mongo:27017/interviewUCC
+    depends_on:
+      - mongo
+
+  # Frontend service
+  frontend:
+    build: 
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  # MongoDB service
+  mongo:
+    image: "mongo:latest"

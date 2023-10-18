@@ -118,10 +118,11 @@ exports.deleteJob = async (req, res, next) => {
     );
 
     await user.save();
-    // retornar lista de trabajos actualizada
+    // retornar lista de trabajos actualizada y status 200
     const profesiones = await Profesion.find({
       _id: { $in: user.profesiones },
     });
+    return res.status(200).json({ profesiones, message: "Trabajo eliminado" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Hubo un error al eliminar el trabajo" });
