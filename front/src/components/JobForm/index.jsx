@@ -8,7 +8,6 @@ import { addJob } from '../../utils/api';
 
 
 const JobForm = () => {
-  // states
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [severity, setSeverity] = useState('success');
@@ -29,7 +28,6 @@ const JobForm = () => {
       try {
       const nombre = sessionStorage.getItem('nombre');
       const { profesion, descripcion } = values;
-      console.log('VALORES:',values);
       const response = await addJob(nombre, profesion, descripcion);
 
       if (response.status === 200) {

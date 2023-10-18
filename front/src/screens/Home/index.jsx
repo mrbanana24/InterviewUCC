@@ -13,9 +13,8 @@ const Home = () => {
 
   const styles = {
     container: {
-      border: '1px solid #D8A1A1',
       height: '100vh',
-      width: '30vw',
+      width: '30%', 
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -34,10 +33,10 @@ const Home = () => {
       alignItems: 'center',
       justifyContent: 'center',
     },
-    containerText: { // TODO: Usar props de Grid y no css
+    containerText: {
       color: '#D8A1A1',
       position: 'absolute',
-      right: 100,
+      right: 20, 
       top: '50%',
       transform: 'translateY(-50%)',
     },
@@ -50,7 +49,6 @@ const Home = () => {
 
   return (
     <>
-      {/* Uso de API, para no usar URL como background-image */}
       <div style={styles.gifContainer}>
         {gif && <Gif gif={gif} />}
       </div>
