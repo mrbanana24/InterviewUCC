@@ -74,3 +74,16 @@ export const deleteJob = async (nombre, id) => {
     throw error;
   }
 };
+
+export const updateJob = async (id, titulo, descripcion) => {
+  try {
+    const response = await axios.put(`http://localhost:8000/updatejob/${id}`, {
+      titulo,
+      descripcion,
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

@@ -6,7 +6,9 @@ import { getJobs, deleteJob } from '../../utils/api';
 import RButton from '../../components/Button'
 import RotateLeftOutlinedIcon from '@mui/icons-material/RotateLeftOutlined';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Snackbar from '../../components/Snackbar'
+import EditJobForm from '../EditJobForm';
 
 const DisplayJobs = () => {
   const styles = {
@@ -42,6 +44,13 @@ const DisplayJobs = () => {
   const [severity, setSeverity] = useState('success');
   const nombre = sessionStorage.getItem('nombre');
   const [jobs, setJobs] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [editingJob, setEditingJob] = useState(null);
+
+  const handleEditClick = (job) => {
+    setEditingJob(job);
+    setEdit(true);
+  };
 
   useEffect (() => {
     const fetchJobs = async () => {
@@ -76,44 +85,54 @@ const DisplayJobs = () => {
       console.log(error);
     }};
 
-  return (
-    <>
-    <RButton
-      text="Recargar"
-      action={() => {
-        const fetchJobs = async () => {
-          const data = await getJobs(nombre);
-          setJobs(data.data.profesiones);
-        }
-        fetchJobs();
-      }}
-      icon={<RotateLeftOutlinedIcon />}
-      
-    />
-  <Grid container sx={styles.container}>
-    {jobs.map((job) => (
-      <Card key={job._id} sx={{...styles.card, ...styles.cardHover}}>
-        <Typography variant="h5" component="div">
-          {job.titulo}
-        </Typography>
-        <Typography variant="body2">
-          {job.descripcion}
-        </Typography>
-        <DeleteForeverOutlinedIcon
-          onClick={handleDeleteJob(nombre,job._id)}
-        />
-      </Card>
-    ))}
-    <Snackbar 
-      body={body}
-      severity={severity}
-      open={open}
-      handleClose={() => handleClose()}
-    />
-  </Grid>
-  </>
-);
 
+   return (
+    <>
+      <RButton
+        text="Recargar"
+        action={() => {
+          const fetchJobs = async () => {
+            const data = await getJobs(nombre);
+            setJobs(data.data.profesiones);
+          };
+          fetchJobs();
+        }}
+        icon={<RotateLeftOutlinedIcon />}
+      />
+      <Grid container sx={styles.container}>
+        {jobs.map((job) => (
+          <Card key={job._id} sx={{ ...styles.card, ...styles.cardHover }}>
+            <Typography variant="h5" component="div">
+              {job.titulo}
+            </Typography>
+            <Typography variant="body2">
+              {job.descripcion}
+            </Typography>
+            <DeleteForeverOutlinedIcon
+              onClick={handleDeleteJob(nombre, job._id)}
+            />
+            <EditOutlinedIcon onClick={() => handleEditClick(job)} />
+            {edit && editingJob?._id === job._id && (
+              <EditJobForm
+                open={edit}
+                job={editingJob}
+                onCancel={() => {
+                  setEditingJob(null);
+                  setEdit(false);
+                }}
+              />
+            )}
+          </Card>
+        ))}
+        <Snackbar
+          body={body}
+          severity={severity}
+          open={open}
+          handleClose={() => handleClose()}
+        />
+      </Grid>
+    </>
+  );
 };
 
 export default DisplayJobs;

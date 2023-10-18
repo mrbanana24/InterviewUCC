@@ -130,3 +130,25 @@ exports.deleteJob = async (req, res, next) => {
     res.status(500).json({ message: "Hubo un error al eliminar el trabajo" });
   }
 };
+
+exports.editJob = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { titulo, descripcion } = req.body;
+
+    const job = await Profesion.findById(id);
+    if (!job) {
+      return res.status(404).json({ message: "Trabajo no encontrado" });
+    }
+
+    job.titulo = titulo;
+    job.descripcion = descripcion;
+
+    await job.save();
+
+    return res.status(200).json({ job, message: "Trabajo actualizado" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Hubo un error al actualizar el trabajo" });
+  }
+};

@@ -21,4 +21,7 @@ router.get("/getjobs/:nombre", userController.getJobs);
 // eliminar profesion del usuario
 router.delete("/deletejob/:nombre/:id", userController.deleteJob);
 
+// editar profesion del usuario
+router.put("/updatejob/:id", userController.editJob);
+
 module.exports = router;
