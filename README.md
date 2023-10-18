@@ -21,7 +21,9 @@ Interview UCC is an application that allows user registration, job creation, edi
 - "react-dom": "^18.2.0",
 - "react-router-dom": "^6.16.0",
 - "yup": "^1.3.2"
-  **Back end**
+
+**Back end**
+
 - "cors": "^2.8.5",
 - "dotenv": "^16.3.1",
 - "express": "^4.18.2",
