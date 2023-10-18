@@ -64,6 +64,12 @@ exports.addJob = async (req, res, next) => {
       return res.status(400).json({ message: "El usuario no existe" });
     }
 
+    if (descripcion.length > 300) {
+      return res.status(400).json({ message: "La descripcion es muy larga" });
+    }
+    if (titulo.length > 20) {
+      return res.status(400).json({ message: "El titulo es muy largo" });
+    }
     // Crear profesion
     const profesion = new Profesion({ titulo, descripcion });
     await profesion.save();
