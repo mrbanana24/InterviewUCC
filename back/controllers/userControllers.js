@@ -78,8 +78,6 @@ exports.addJob = async (req, res, next) => {
     user.profesiones.push(profesion);
     await user.save();
 
-    console.log("user con laburo:", user);
-
     return res.status(201).json({ message: "Profesion agregada" });
   } catch (error) {
     next(error);
@@ -99,7 +97,6 @@ exports.getJobs = async (req, res, next) => {
     const profesiones = await Profesion.find({
       _id: { $in: user.profesiones },
     });
-    console.log("profesiones:", profesiones);
 
     return res.status(200).json({ profesiones });
   } catch (error) {
@@ -124,7 +121,6 @@ exports.deleteJob = async (req, res, next) => {
     );
 
     await user.save();
-    // retornar lista de trabajos actualizada y status 200
     const profesiones = await Profesion.find({
       _id: { $in: user.profesiones },
     });

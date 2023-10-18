@@ -14,13 +14,16 @@ connectDB();
 
 // Config CORS
 app.use(cors());
+app_micro.use(cors());
 
 // Config dotenv
 require("dotenv").config();
 
 // Routes
 const routes = require("./routes/routes.js");
+const routes_micro = require("./routes/micro-service.js");
 app.use("/", routes);
+app_micro.use("/", routes_micro);
 
 // Error handler middleware
 app.use((err, req, res, next) => {
@@ -31,4 +34,8 @@ app.use((err, req, res, next) => {
 // Start the server
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
+});
+
+app_micro.listen(port_micro, () => {
+  console.log(`Server is listening on port ${port_micro}`);
 });
