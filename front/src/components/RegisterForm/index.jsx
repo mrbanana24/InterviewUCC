@@ -60,8 +60,9 @@ const RegisterForm = () => {
         setSeverity('success');
         response && Navigate('/login')
       } } catch (error) {
+        console.log(error.response)
         setOpen(true);
-        setMessage(error.response.data.error);
+        setMessage(error.response.data.message);
         setSeverity('error');
       }
     },
