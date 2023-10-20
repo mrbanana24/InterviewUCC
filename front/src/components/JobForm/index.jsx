@@ -30,7 +30,8 @@ const JobForm = () => {
       const { profesion, descripcion } = values;
       const response = await addJob(nombre, profesion, descripcion);
 
-      if (response.status === 200) {
+      if (response.status === 201) {
+        formik.resetForm();
         setOpen(true);
         setMessage(response.data.message);
         setSeverity('success');
@@ -70,7 +71,7 @@ const JobForm = () => {
           id="profesion"
           name="profesion"
           label="Nombre de tu profesion"
-          value={formik.values.nombre}
+          value={formik.values.profesion}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.nombre && Boolean(formik.errors.nombre)}
@@ -81,7 +82,7 @@ const JobForm = () => {
           id="descripcion"
           name="descripcion"
           label="Cuentanos sobre tu profesion!"
-          value={formik.values.password}
+          value={formik.values.descripcion}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.password && Boolean(formik.errors.password)}
