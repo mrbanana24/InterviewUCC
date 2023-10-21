@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   const dbUrl =
-    process.env.DATABASE_URL || "mongodb://localhost:27017/interviewUCC";
+    process.env.DATABASE_URL ||
+    "mongodb+srv://franpercivaldi:mansanita15@cluster0.l9ev6yl.mongodb.net/";
   mongoose
     .connect(dbUrl, {
       useNewUrlParser: true,

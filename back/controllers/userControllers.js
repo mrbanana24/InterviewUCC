@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const Profesion = require("../models/job");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 exports.register = async (req, res) => {
   const { nombre, password, domicilio } = req.body;
