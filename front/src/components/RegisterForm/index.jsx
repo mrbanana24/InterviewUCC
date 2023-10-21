@@ -70,7 +70,7 @@ const RegisterForm = () => {
 
   const styles = {
     form: {
-      maxWidth: '50vw',
+      maxWidth: '40vw',
       padding: '16px',
       borderRadius: '10px',
       margin: 'auto',
