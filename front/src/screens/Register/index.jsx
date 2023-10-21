@@ -37,7 +37,7 @@ const Register = () => {
       <MuiGrid item xs={12} md={6} sx={{ maxHeight: '100vh', overflow: 'hidden' }}>
         <Paper elevation={3} style={{ ...blurStyle, position: 'relative', overflow: 'hidden' }}>
           <div style={overlayStyle}></div>
-          <Grid width={800} columns={3} gutter={2} borderRadius={9} fetchGifs={fetchGifs} key={searchTag} />
+          <Grid width={1500} columns={5} gutter={2} borderRadius={9} fetchGifs={fetchGifs} key={searchTag} />
         </Paper>
       </MuiGrid>
     </MuiGrid>
