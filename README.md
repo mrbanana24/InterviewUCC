@@ -33,4 +33,5 @@ Interview UCC is an application that allows user registration, job creation, edi
 ## Run in local
 
 You must have nodejs and docker.
+Make sure to change the .env.example file to just .env
 Run: `docker compose up`

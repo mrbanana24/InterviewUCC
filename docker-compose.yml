@@ -8,8 +8,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    environment:
-      - DATABASE_URL=mongodb://mongo:27017/interviewUCC
     depends_on:
       - mongo
 
